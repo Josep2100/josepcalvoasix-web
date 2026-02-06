@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,7 +14,7 @@ body{
     overflow-x:hidden;
 }
 
-/* CANVAS MATRIX */
+/* MATRIX CANVAS */
 #matrix{
     position:fixed;
     top:0;
@@ -25,7 +24,7 @@ body{
     z-index:-2;
 }
 
-/* Partículas */
+/* Partículas hacker */
 .particle{
     position:fixed;
     width:3px;
@@ -41,18 +40,10 @@ body{
     to{transform:translateY(-10vh);}
 }
 
-/* Banner */
-.banner{
-    width:100%;
-    height:300px;
-    background:url('banner.jpg') center/cover no-repeat;
-    position:relative;
-}
-
 /* Perfil */
 .perfil{
     text-align:center;
-    margin-top:-70px;
+    margin-top:40px;
 }
 
 .perfil img{
@@ -63,7 +54,7 @@ body{
     box-shadow:0 0 25px #22c55e;
 }
 
-/* Contenido */
+/* Contenedor */
 .container{
     max-width:1000px;
     margin:auto;
@@ -109,6 +100,8 @@ h1{
     width:260px;
     transition:0.3s;
     box-shadow:0 0 10px rgba(34,197,94,0.3);
+    text-decoration:none;
+    color:#22c55e;
 }
 
 .card:hover{
@@ -138,8 +131,6 @@ h1{
 <body>
 
 <canvas id="matrix"></canvas>
-
-<div class="banner"></div>
 
 <div class="perfil">
 <img src="perfil.png">
