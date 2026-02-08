@@ -2,154 +2,156 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<title>ROOT ACCESS | Josep ASIX</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROOT ACCESS - JosepCalvo ASIX</title>
 
 <style>
-*{box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-    margin:0;
-    background:black;
-    color:#00ff66;
-    font-family:Consolas, monospace;
-    overflow:hidden;
+  background:black;
+  color:#00ff9f;
+  font-family:monospace;
+  overflow:hidden;
 }
+
+/* MATRIX */
 canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:-1;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  z-index:-1;
 }
-#boot{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-    z-index:10;
-    animation:bootOut 3s forwards 3s;
+
+/* LOGIN */
+#login{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:9999;
+  animation:fade 1s forwards;
+  animation-delay:3s;
 }
-@keyframes bootOut{
-    to{opacity:0;visibility:hidden}
-}
+@keyframes fade{to{opacity:0;visibility:hidden}}
+
+h1{margin-bottom:20px}
+.access{color:#0f0;font-size:20px}
+
+/* TERMINAL */
 .container{
-    max-width:1000px;
-    margin:auto;
-    padding:30px;
-    text-align:center;
+  position:relative;
+  z-index:2;
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
 }
-.perfil img{
-    width:150px;
-    border-radius:50%;
-    border:3px solid #00ff66;
-    box-shadow:0 0 25px #00ff66;
+.card{
+  border:1px solid #00ff9f;
+  padding:20px;
+  margin:20px 0;
+  background:rgba(0,0,0,.6);
 }
-.btn{
-    display:inline-block;
-    margin:12px;
-    padding:12px 25px;
-    background:#00ff66;
-    color:black;
-    text-decoration:none;
-    border-radius:6px;
-    font-weight:bold;
+button{
+  background:black;
+  color:#00ff9f;
+  border:1px solid #00ff9f;
+  padding:12px;
+  cursor:pointer;
 }
-.btn:hover{background:#33ff88}
-.terminal{
-    margin-top:30px;
-    background:#020617;
-    border:1px solid #00ff66;
-    padding:15px;
-    border-radius:8px;
-    min-height:140px;
-    text-align:left;
+button:hover{
+  background:#00ff9f;
+  color:black;
 }
-.info{
-    margin-top:15px;
-    color:#66ff99;
+pre{
+  height:180px;
+  overflow:hidden;
 }
 </style>
 </head>
 
 <body>
 
-<div id="boot">🔐 ACCESS GRANTED — ROOT TERMINAL INICIANDO...</div>
+<div id="login">
+  <h1>ROOT LOGIN</h1>
+  <div class="access">ACCESS GRANTED ██████</div>
+</div>
+
 <canvas id="matrix"></canvas>
 
 <div class="container">
+  <h1>⚡ Bienvenido a mi web</h1>
 
-<div class="perfil">
-<img src="perfil.png">
-</div>
+  <div class="card">
+    <h2>🧠 Visitante detectado</h2>
+    <p id="ip">Obteniendo IP...</p>
+    <p id="loc"></p>
+  </div>
 
-<h1>JOSEPCALVO ASIX — ROOT TERMINAL</h1>
-<p>Landing Page Hacker Linux</p>
+  <div class="card">
+    <h2>💻 Terminal activa</h2>
+    <pre id="terminal"></pre>
+  </div>
 
-<div class="info">
-IP visitante: <span id="ip">cargando...</span><br>
-Ubicación aproximada: <span id="loc">cargando...</span>
-</div>
-
-<a class="btn" href="https://www.youtube.com/@josepcalvoasix/videos" target="_blank">🔥 Ir al Canal</a>
-<a class="btn" href="https://www.youtube.com/watch?v=nvU_d3823kY" target="_blank">🚀 Último Video</a>
-
-<div class="terminal" id="term"></div>
-
+  <div class="card">
+    <h2>🎥 Último contenido</h2>
+    <button onclick="window.open('https://www.youtube.com/@josepcalvoasix/videos','_blank')">
+      ▶ Ver último video
+    </button>
+  </div>
 </div>
 
 <script>
+// MATRIX EFFECT
 const c=document.getElementById("matrix");
 const ctx=c.getContext("2d");
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-const chars="01";
-const fs=14;
-const cols=c.width/fs;
+c.width=innerWidth;c.height=innerHeight;
+const letters="01SYSTEMROOTKERNELLINUXASIX";
+const cols=c.width/20;
 const drops=Array(Math.floor(cols)).fill(1);
-
 function draw(){
-ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,c.width,c.height);
-ctx.fillStyle="#00ff66";
-ctx.font=fs+"px monospace";
-drops.forEach((y,i)=>{
-const t=chars[Math.floor(Math.random()*2)];
-ctx.fillText(t,i*fs,y*fs);
-drops[i]=y*fs>c.height&&Math.random()>0.975?0:y+1;
-});
+ ctx.fillStyle="rgba(0,0,0,0.05)";
+ ctx.fillRect(0,0,c.width,c.height);
+ ctx.fillStyle="#0f0";
+ ctx.font="15px monospace";
+ drops.forEach((y,i)=>{
+  const t=letters[Math.floor(Math.random()*letters.length)];
+  ctx.fillText(t,i*20,y*20);
+  if(y*20>c.height && Math.random()>0.975)drops[i]=0;
+  drops[i]++;
+ });
 }
 setInterval(draw,33);
 
-const lines=[
-"root@ubuntu:~# apt update",
-"root@ubuntu:~# free -h",
-"root@ubuntu:~# ps aux",
-"root@ubuntu:~# mount -a",
-"root@ubuntu:~# docker ps",
-"root@ubuntu:~# grub-install /dev/sda"
+// TERMINAL
+const term=document.getElementById("terminal");
+const cmds=[
+"whoami",
+"root",
+"free -h",
+"swapon --show",
+"ps aux",
+"mount | grep fstab",
+"docker ps -a",
+"systemctl status"
 ];
-let l=0;
-function type(){
-if(l<lines.length){
-document.getElementById("term").innerHTML+=lines[l]+"<br>";
-l++;
-setTimeout(type,700);
-}
-}
-type();
+let i=0;
+setInterval(()=>{
+ term.textContent+=cmds[i%cmds.length]+"\\n";
+ i++;
+ if(term.textContent.length>2000)term.textContent="";
+},600);
 
-fetch("https://ipapi.co/json")
+// IP INFO
+fetch("https://ipapi.co/json/")
 .then(r=>r.json())
 .then(d=>{
-document.getElementById("ip").innerText=d.ip;
-document.getElementById("loc").innerText=d.city+", "+d.country_name;
+ document.getElementById("ip").textContent="IP: "+d.ip;
+ document.getElementById("loc").textContent="Ubicación: "+d.city+", "+d.country_name;
 })
-.catch(()=>{
-document.getElementById("ip").innerText="N/A";
-document.getElementById("loc").innerText="N/A";
-});
+.catch(()=>document.getElementById("ip").textContent="IP no disponible");
 </script>
 
 </body>
