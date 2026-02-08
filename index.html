@@ -3,227 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JosepCalvo ASIX - Linux Hacker</title>
+<title>ROOT ACCESS - JosepCalvo ASIX</title>
 
 <style>
+*{box-sizing:border-box}
 body{
     margin:0;
+    background:black;
+    color:#00ff66;
     font-family:Consolas, monospace;
-    background:#000;
-    color:#22c55e;
-    overflow-x:hidden;
+    overflow:hidden;
 }
-
-/* MATRIX CANVAS */
-#matrix{
+canvas{
     position:fixed;
     top:0;
     left:0;
-    width:100%;
-    height:100%;
-    z-index:-2;
-}
-
-/* Partículas hacker */
-.particle{
-    position:fixed;
-    width:3px;
-    height:3px;
-    background:#22c55e;
-    box-shadow:0 0 10px #22c55e;
-    animation:float 8s linear infinite;
     z-index:-1;
 }
-
-@keyframes float{
-    from{transform:translateY(100vh);}
-    to{transform:translateY(-10vh);}
+#boot{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    z-index:10;
+    animation:bootOut 3s forwards 3s;
 }
-
-/* Perfil */
-.perfil{
-    text-align:center;
-    margin-top:40px;
+@keyframes bootOut{
+    to{opacity:0;visibility:hidden}
 }
-
-.perfil img{
-    width:160px;
-    height:160px;
-    border-radius:50%;
-    border:4px solid #22c55e;
-    box-shadow:0 0 25px #22c55e;
-}
-
-/* Contenedor */
 .container{
     max-width:1000px;
     margin:auto;
-    padding:20px;
+    padding:30px;
     text-align:center;
 }
-
-h1{
-    text-shadow:0 0 15px #22c55e;
+.perfil img{
+    width:150px;
+    border-radius:50%;
+    border:3px solid #00ff66;
+    box-shadow:0 0 25px #00ff66;
 }
-
-.boton{
+.btn{
     display:inline-block;
-    margin-top:20px;
+    margin:12px;
     padding:12px 25px;
-    background:#22c55e;
+    background:#00ff66;
     color:black;
-    border-radius:8px;
     text-decoration:none;
+    border-radius:6px;
     font-weight:bold;
-    transition:0.3s;
 }
-
-.boton:hover{
-    background:#4ade80;
-    transform:scale(1.05);
-}
-
-/* Cards videos */
-.videos{
-    margin-top:40px;
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-
-.card{
-    background:#020617;
-    border:1px solid #22c55e;
-    border-radius:12px;
-    padding:20px;
-    width:260px;
-    transition:0.3s;
-    box-shadow:0 0 10px rgba(34,197,94,0.3);
-    text-decoration:none;
-    color:#22c55e;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 0 20px #22c55e;
-}
-
-/* Terminal */
+.btn:hover{background:#33ff88}
 .terminal{
     margin-top:30px;
     background:#020617;
-    border:1px solid #22c55e;
+    border:1px solid #00ff66;
     padding:15px;
     border-radius:8px;
+    min-height:140px;
     text-align:left;
-    min-height:120px;
 }
-
-.counter{
-    margin-top:10px;
-    font-size:14px;
-    color:#86efac;
+.info{
+    margin-top:15px;
+    color:#66ff99;
 }
 </style>
 </head>
 
 <body>
 
+<div id="boot">🔐 ACCESS GRANTED — ROOT TERMINAL INICIANDO...</div>
 <canvas id="matrix"></canvas>
+
+<div class="container">
 
 <div class="perfil">
 <img src="perfil.png">
 </div>
 
-<div class="container">
-<h1>JOSEPCALVO ASIX 🐧 ROOT TERMINAL</h1>
-<p>Administración Linux, Ubuntu y SysAdmin extremo</p>
+<h1>JOSEPCALVO ASIX — ROOT TERMINAL</h1>
+<p>Landing Page Hacker Linux</p>
 
-<a class="boton" href="https://www.youtube.com/@josepcalvoasix/videos" target="_blank">
-🔥 Ir al canal de YouTube
-</a>
-
-<div class="terminal">
-<span id="typing"></span>
+<div class="info">
+IP visitante: <span id="ip">cargando...</span><br>
+Ubicación aproximada: <span id="loc">cargando...</span>
 </div>
-<div class="counter">Comandos ejecutados: <span id="count">0</span></div>
 
-<div class="videos">
+<a class="btn" href="https://www.youtube.com/@josepcalvoasix/videos" target="_blank">🔥 Ir al Canal</a>
+<a class="btn" href="https://www.youtube.com/watch?v=nvU_d3823kY" target="_blank">🚀 Último Video</a>
 
-<a href="https://www.youtube.com/watch?v=Nj4raM_5wWo&t=9s" target="_blank" class="card">
-<h3>MEMORIA RAM & SWAP</h3>
-<p>free -h, swappiness y gestión avanzada.</p>
-</a>
+<div class="terminal" id="term"></div>
 
-<a href="https://www.youtube.com/watch?v=nvU_d3823kY" target="_blank" class="card">
-<h3>GESTIÓN DE PROCESOS</h3>
-<p>top, ps, kill, nice y renice.</p>
-</a>
-
-</div>
 </div>
 
 <script>
-/* MATRIX EFFECT */
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-
-const letters = "01";
-const fontSize = 14;
-const columns = canvas.width/fontSize;
-const drops = [];
-
-for(let x=0;x<columns;x++) drops[x]=1;
+const c=document.getElementById("matrix");
+const ctx=c.getContext("2d");
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+const chars="01";
+const fs=14;
+const cols=c.width/fs;
+const drops=Array(Math.floor(cols)).fill(1);
 
 function draw(){
 ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="#22c55e";
-ctx.font=fontSize+"px monospace";
-
-for(let i=0;i<drops.length;i++){
-const text = letters.charAt(Math.floor(Math.random()*letters.length));
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
-drops[i]++;
-}
+ctx.fillRect(0,0,c.width,c.height);
+ctx.fillStyle="#00ff66";
+ctx.font=fs+"px monospace";
+drops.forEach((y,i)=>{
+const t=chars[Math.floor(Math.random()*2)];
+ctx.fillText(t,i*fs,y*fs);
+drops[i]=y*fs>c.height&&Math.random()>0.975?0:y+1;
+});
 }
 setInterval(draw,33);
 
-/* PARTICLES */
-for(let i=0;i<40;i++){
-let p=document.createElement("div");
-p.className="particle";
-p.style.left=Math.random()*100+"vw";
-p.style.animationDuration=(5+Math.random()*5)+"s";
-document.body.appendChild(p);
-}
-
-/* TYPING TERMINAL */
-const textLines=[
-"sudo apt update",
-"free -h",
-"ps aux",
-"sudo mount -a",
-"docker run hello-world",
-"grub-install /dev/sda"
+const lines=[
+"root@ubuntu:~# apt update",
+"root@ubuntu:~# free -h",
+"root@ubuntu:~# ps aux",
+"root@ubuntu:~# mount -a",
+"root@ubuntu:~# docker ps",
+"root@ubuntu:~# grub-install /dev/sda"
 ];
-
-let i=0;
-let count=0;
+let l=0;
 function type(){
-if(i<textLines.length){
-document.getElementById("typing").innerHTML += "$ "+textLines[i]+"<br>";
-i++;
-count++;
-document.getElementById("count").innerText=count;
-setTimeout(type,900);
+if(l<lines.length){
+document.getElementById("term").innerHTML+=lines[l]+"<br>";
+l++;
+setTimeout(type,700);
 }
 }
 type();
+
+fetch("https://ipapi.co/json")
+.then(r=>r.json())
+.then(d=>{
+document.getElementById("ip").innerText=d.ip;
+document.getElementById("loc").innerText=d.city+", "+d.country_name;
+})
+.catch(()=>{
+document.getElementById("ip").innerText="N/A";
+document.getElementById("loc").innerText="N/A";
+});
 </script>
 
 </body>
