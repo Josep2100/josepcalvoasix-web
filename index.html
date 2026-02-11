@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JosepCalvo ASIX - Linux Hacker</title>
 
-<script type="text/javascript" src="https://ff.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=QlmUF0zhQ_pCjsO7huT0kJasvRfF5L0Ht9dyXe-9AXSdKUkOqYrm4JVJxoqedg7hkCbYWg_k2z_a4C0W_QlewMCr4W1z5HOblffIYNEtZVLXjmYMu3bV61dsD53fjGZMNHVwinAURUtWQOuhOjJLqHrqefE7qbbVqVJJYVRFonwchC3tLPYO9PDLsWJcYnZhxCwJbC-r71f0lwtUb7hnGO-enZEibYSdqvWFSfH-HBDXwZKC9i2kbV9wfl1Vbb7AgbjBiyNV4vfFJS_nYHFUEg" charset="UTF-8"></script><style>
+<style>
 body{
     margin:0;
     font-family:Consolas, monospace;
@@ -149,8 +149,16 @@ h1{
 </div>
 <div class="counter">Comandos ejecutados: <span id="count">0</span></div>
 
+<!-- 🔥 CARDS DE VIDEOS FIJOS + AUTO-VIDEO -->
 <div class="videos">
 
+<!-- AUTO-VIDEO (nuevo video que subas) -->
+<a id="autoVideo" target="_blank" class="card">
+<h3>⏳ Cargando último video...</h3>
+<p>Detectando subida automática...</p>
+</a>
+
+<!-- Videos fijos -->
 <a href="https://www.youtube.com/watch?v=Nj4raM_5wWo&t=9s" target="_blank" class="card">
 <h3>MEMORIA RAM & SWAP</h3>
 <p>free -h, swappiness y gestión avanzada.</p>
@@ -159,6 +167,21 @@ h1{
 <a href="https://www.youtube.com/watch?v=nvU_d3823kY" target="_blank" class="card">
 <h3>GESTIÓN DE PROCESOS</h3>
 <p>top, ps, kill, nice y renice.</p>
+</a>
+
+<a href="https://www.youtube.com/watch?v=C-h8ames-GM" target="_blank" class="card">
+<h3>FSTAB</h3>
+<p>Montaje automático y gestión de discos.</p>
+</a>
+
+<a href="https://www.youtube.com/watch?v=HZbzfRrD2yM" target="_blank" class="card">
+<h3>INSTALACIÓN DESDE CÓDIGO FUENTE</h3>
+<p>Compilar e instalar software desde source.</p>
+</a>
+
+<a href="https://www.youtube.com/watch?v=KnBaMcEgnn0" target="_blank" class="card">
+<h3>REPARACIÓN DEL GRUB</h3>
+<p>Solución de arranque en Linux.</p>
 </a>
 
 </div>
@@ -224,6 +247,34 @@ setTimeout(type,900);
 }
 }
 type();
+
+/* 🔥 AUTO DETECCIÓN ÚLTIMO VIDEO SUBIDO */
+const channelID = "UC5LxrchV-nNK5gYJa0Ipsbw";
+
+function getVideoID(url){
+  const match = url.match(/v=([^&]+)/);
+  return match ? match[1] : null;
+}
+
+fetch("https://api.rss2json.com/v1/api.json?rss_url=" +
+encodeURIComponent("https://www.youtube.com/feeds/videos.xml?channel_id="+channelID))
+.then(res=>res.json())
+.then(data=>{
+
+  const video = data.items[0];
+  const videoID = getVideoID(video.link);
+  const card = document.getElementById("autoVideo");
+
+  card.href = video.link;
+  card.innerHTML = `
+  <h3>🔥 ${video.title}</h3>
+  <p>Nuevo vídeo detectado automáticamente ⚡</p>
+  `;
+})
+.catch(()=>{
+  document.getElementById("autoVideo").innerHTML =
+  "<h3>Error cargando último video</h3>";
+});
 </script>
 
 </body>
