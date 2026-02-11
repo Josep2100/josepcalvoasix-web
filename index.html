@@ -187,7 +187,7 @@ body{
 <h1 class="glitch">JOSEPCALVO ASIX 🐧</h1>
 <p>Linux • SysAdmin • Hacking visual profesional</p>
 
-<!-- SUBS REALES -->
+<!-- SUBS EN VIVO INFALIBLES -->
 <h3 id="subs">Suscriptores: cargando...</h3>
 
 <!-- VISITAS -->
@@ -215,7 +215,7 @@ body{
 <p>Detectando subida automática...</p>
 </a>
 
-<!-- TUS VIDEOS -->
+<!-- VIDEOS FIJOS -->
 <a href="https://www.youtube.com/watch?v=Nj4raM_5wWo" target="_blank" class="card">
 <img src="https://img.youtube.com/vi/Nj4raM_5wWo/hqdefault.jpg">
 <h3>MEMORIA RAM & SWAP</h3>
@@ -250,6 +250,7 @@ body{
 ======================= */
 const canvas=document.getElementById("matrix");
 const ctx=canvas.getContext("2d");
+
 function resizeMatrix(){
     canvas.width=window.innerWidth;
     canvas.height=window.innerHeight;
@@ -326,35 +327,44 @@ fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(
 });
 
 /* =======================
-   SUBS REALES (API KEY PROTEGIDA)
+   SUBS EN VIVO — INFALIBLE (SocialCounts API)
 ======================= */
-const API_KEY = atob("QUl6YVN5REF2d1ZhSVlPazUtZzBHRTlBaDdhYXlqMllWR2V5emM=");
 
-async function cargarSubs(){
-    try{
-        const res=await fetch(
-            `https://youtube.googleapis.com/youtube/v3/channels?part=statistics&id=${channelID}&key=${API_KEY}`
-        );
-        const data=await res.json();
-        const subs=parseInt(data.items[0].statistics.subscriberCount);
-        animarSubs(subs);
-    }catch(err){
-        document.getElementById("subs").innerHTML="Suscriptores: error";
+async function cargarSubsInfalible() {
+    try {
+        const url = `https://api.socialcounts.org/youtube-live-subscriber-count/UC5LxrchV-nNK5gYJa0Ipsbw`;
+
+        let response = await fetch(url);
+        let data = await response.json();
+
+        const subs = data.estSub ?? data.subscriberCount ?? 0;
+
+        animarSubsInfalible(subs);
+
+    } catch (err) {
+        console.log("Subs Error:", err);
+        document.getElementById("subs").innerHTML = "Suscriptores: error (modo fallback)";
     }
 }
-function animarSubs(final){
-    let current=0;
-    let speed=Math.max(5,final/200);
-    const int=setInterval(()=>{
-        current+=Math.round(speed);
-        if(current>=final){
-            current=final;
-            clearInterval(int);
+
+function animarSubsInfalible(finalValue) {
+    let current = 0;
+    const speed = Math.max(10, finalValue / 150);
+
+    const interval = setInterval(() => {
+        current += Math.round(speed);
+        if (current >= finalValue) {
+            current = finalValue;
+            clearInterval(interval);
         }
-        document.getElementById("subs").innerHTML="Suscriptores: "+current.toLocaleString();
-    },20);
+        document.getElementById("subs").innerHTML =
+            "Suscriptores: " + current.toLocaleString();
+    }, 25);
 }
-cargarSubs();
+
+// Actualizar cada 10 segundos
+setInterval(cargarSubsInfalible, 10000);
+cargarSubsInfalible();
 
 /* =======================
    VISITAS ESTILO HACKER
