@@ -10,6 +10,9 @@
 <audio id="crtNoise" src="https://assets.mixkit.co/active_storage/sfx/2921/2921-preview.mp3" loop></audio>
 <audio id="keySound" src="https://assets.mixkit.co/active_storage/sfx/1451/1451-preview.mp3"></audio>
 
+<!-- TU MÚSICA HACKER (Imperial March) -->
+<audio id="bgMusic" src="Star Wars- The Imperial March (Darth Vader's Theme).mp3" loop></audio>
+
 <style>
 body{
     margin:0;
@@ -172,6 +175,7 @@ body::before{
 }
 </style>
 </head>
+
 <body>
 
 <!-- BOOT ANIMATION -->
@@ -219,6 +223,8 @@ body::before{
 </div>
 
 </div>
+
+
 <script>
 /* ============================================================
    1. BOOT LINUX REAL + SONIDO AUTOMÁTICO
@@ -228,6 +234,7 @@ const boot = document.getElementById("boot");
 const biosBeep = document.getElementById("biosBeep");
 const crtNoise = document.getElementById("crtNoise");
 const keySound = document.getElementById("keySound");
+const bgMusic = document.getElementById("bgMusic");
 
 const bootLines = [
 "[ OK ] Starting system logger...",
@@ -247,9 +254,11 @@ let bl = 0;
 function playBoot() {
     biosBeep.volume = 0.4;
     crtNoise.volume = 0.2;
+    bgMusic.volume = 0.3;
 
     biosBeep.play().catch(() => {});
     crtNoise.play().catch(() => {});
+    bgMusic.play().catch(() => {});
 
     let interval = setInterval(() => {
         if (bl < bootLines.length) {
@@ -266,7 +275,27 @@ window.onload = () => {
 };
 
 /* ============================================================
-   2. MATRIX LLUVIA — OPIMIZADA PARA MODO CRT
+   DESBLOQUEAR AUDIO AL PRIMER CLIC
+============================================================ */
+let audioUnlocked = false;
+
+function unlockAudio() {
+    if (!audioUnlocked) {
+        biosBeep.play().catch(() => {});
+        crtNoise.play().catch(() => {});
+        keySound.play().catch(() => {});
+        bgMusic.play().catch(() => {});
+
+        audioUnlocked = true;
+        console.log("🔊 Audio desbloqueado");
+    }
+}
+
+document.addEventListener("click", unlockAudio);
+document.addEventListener("keydown", unlockAudio);
+
+/* ============================================================
+   MATRIX
 ============================================================ */
 
 const canvasMatrix = document.getElementById("matrix");
@@ -309,7 +338,7 @@ function drawMatrix() {
 setInterval(drawMatrix, 33);
 
 /* ============================================================
-   3. PARALLAX 3D
+   PARALLAX 3D
 ============================================================ */
 
 document.addEventListener("mousemove", (e) => {
@@ -320,7 +349,7 @@ document.addEventListener("mousemove", (e) => {
 });
 
 /* ============================================================
-   4. TERMINAL TYPING + SONIDO
+   TERMINAL TYPING + SONIDO
 ============================================================ */
 
 const textLines = [
@@ -351,10 +380,10 @@ function type() {
     }
 }
 
-setTimeout(type, 4000); // empieza después del boot
+setTimeout(type, 4000);
 
 /* ============================================================
-   5. VISITAS HACKER
+   VISITAS HACKER
 ============================================================ */
 
 let visitas = localStorage.getItem("visitas_josep");
@@ -369,7 +398,7 @@ document.getElementById("visitas").innerHTML =
     "Visitas: " + String(visitas).padStart(6, "0");
 
 /* ============================================================
-   6. ASCII GRAPH
+   ASCII GRAPH
 ============================================================ */
 
 function asciiGraph(value) {
@@ -383,7 +412,7 @@ document.getElementById("asciiGraph").innerText =
     "Actividad del sistema:\n" + asciiGraph(visitas * 6);
 
 /* ============================================================
-   7. AUTO-VÍDEO YOUTUBE
+   AUTO-VÍDEO YOUTUBE
 ============================================================ */
 
 function getVideoID(url) {
@@ -412,7 +441,7 @@ fetch(
     });
 
 /* ============================================================
-   8. SUSCRIPTORES INFALIBLES (SocialCounts API)
+   SUSCRIPTORES INFALIBLES
 ============================================================ */
 
 async function cargarSubsInfalible() {
@@ -427,7 +456,6 @@ async function cargarSubsInfalible() {
 
         animarSubsInfalible(subs);
     } catch (err) {
-        console.log("Subs Error:", err);
         document.getElementById("subs").innerHTML =
             "Suscriptores: error";
     }
