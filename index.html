@@ -129,3 +129,102 @@ h1{
 </head>
 
 <body>
+
+<canvas id="matrix"></canvas>
+
+<div class="perfil">
+<img src="perfil.png">
+</div>
+
+<div class="container">
+<h1>JOSEPCALVO ASIX 🐧 ROOT TERMINAL</h1>
+<p>Administración Linux, Ubuntu y SysAdmin extremo</p>
+
+<a class="boton" href="https://www.youtube.com/@josepcalvoasix/videos" target="_blank">
+🔥 Ir al canal de YouTube
+</a>
+
+<div class="terminal">
+<span id="typing"></span>
+</div>
+<div class="counter">Comandos ejecutados: <span id="count">0</span></div>
+
+<div class="videos">
+
+<a href="https://www.youtube.com/watch?v=Nj4raM_5wWo&t=9s" target="_blank" class="card">
+<h3>MEMORIA RAM & SWAP</h3>
+<p>free -h, swappiness y gestión avanzada.</p>
+</a>
+
+<a href="https://www.youtube.com/watch?v=nvU_d3823kY" target="_blank" class="card">
+<h3>GESTIÓN DE PROCESOS</h3>
+<p>top, ps, kill, nice y renice.</p>
+</a>
+
+</div>
+</div>
+
+<script>
+/* MATRIX EFFECT */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+const letters = "01";
+const fontSize = 14;
+const columns = canvas.width/fontSize;
+const drops = [];
+
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#22c55e";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+const text = letters.charAt(Math.floor(Math.random()*letters.length));
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
+drops[i]++;
+}
+}
+setInterval(draw,33);
+
+/* PARTICLES */
+for(let i=0;i<40;i++){
+let p=document.createElement("div");
+p.className="particle";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(p);
+}
+
+/* TYPING TERMINAL */
+const textLines=[
+"sudo apt update",
+"free -h",
+"ps aux",
+"sudo mount -a",
+"docker run hello-world",
+"grub-install /dev/sda"
+];
+
+let i=0;
+let count=0;
+function type(){
+if(i<textLines.length){
+document.getElementById("typing").innerHTML += "$ "+textLines[i]+"<br>";
+i++;
+count++;
+document.getElementById("count").innerText=count;
+setTimeout(type,900);
+}
+}
+type();
+</script>
+
+</body>
+</html>
