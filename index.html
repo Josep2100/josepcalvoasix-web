@@ -2,155 +2,144 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Josep Calvo ASIX | GOD TERMINAL</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>JOSEPCALVO ASIX - ROOT TERMINAL</title>
 
 <style>
 body{
-margin:0;
 background:black;
-color:#00ff88;
-font-family:Consolas,monospace;
+color:#00ff9f;
+font-family:monospace;
+text-align:center;
+margin:0;
 overflow-x:hidden;
 }
 
-/* ===== FONDO TERMINAL ===== */
-body::before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:repeating-linear-gradient(
-0deg,
-rgba(0,255,136,0.05),
-rgba(0,255,136,0.05) 1px,
-transparent 1px,
-transparent 3px
-);
-animation:scan 8s linear infinite;
-z-index:-1;
-}
-@keyframes scan{
-from{transform:translateY(0)}
-to{transform:translateY(100px)}
+h1{
+margin-top:20px;
+text-shadow:0 0 10px #00ff9f;
 }
 
-header{
-text-align:center;
-padding:40px;
-font-size:35px;
-text-shadow:0 0 15px #00ff88;
+.video-principal iframe{
+width:80%;
+height:420px;
+border:2px solid #00ff9f;
+box-shadow:0 0 20px #00ff9f;
 }
 
-.mainVideo{
-max-width:900px;
-margin:auto;
-box-shadow:0 0 25px #00ff88;
+.boton-canal{
+display:inline-block;
+margin:20px;
+padding:12px 20px;
+background:#00ff9f;
+color:black;
+font-weight:bold;
+text-decoration:none;
 }
 
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
 gap:20px;
-max-width:1100px;
-margin:40px auto;
+margin-bottom:50px;
 }
 
 .card{
-border:1px solid #00ff88;
-cursor:pointer;
+width:240px;
+border:1px solid #00ff9f;
+padding:10px;
 transition:0.3s;
 }
+
 .card:hover{
 transform:scale(1.05);
-box-shadow:0 0 15px #00ff88;
+box-shadow:0 0 15px #00ff9f;
 }
 
 .card img{
 width:100%;
-}
-
-.btn{
-display:inline-block;
-margin-top:20px;
-padding:12px 22px;
-background:#00ff88;
-color:black;
-text-decoration:none;
-font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-⚡ JOSEPCALVO ASIX - ROOT TERMINAL
-</header>
+<h1>⚡ JOSEPCALVO ASIX - ROOT TERMINAL</h1>
 
-<div id="mainVideo" class="mainVideo">
-Cargando videos...
+<div class="video-principal" id="mainVideo">
+Cargando vídeos...
 </div>
 
-<div style="text-align:center;">
-<a class="btn" target="_blank"
-href="https://www.youtube.com/channel/UC5LxrchV-nNK5gYJa0Ipsbw">
+<a class="boton-canal" href="https://www.youtube.com/channel/UC5LxrchV-nNK5gYJa0Ipsbw" target="_blank">
 🚀 Ver vídeos completos en mi canal
 </a>
-</div>
 
-<div id="videoGrid" class="grid"></div>
+<div class="grid" id="videoList"></div>
 
 <script>
 
-/* ===== DIOS TERMINAL AUTO VIDEOS ===== */
+// ✅ TU CHANNEL ID REAL
+const channelID = "UC5LxrchV-nNK5gYJa0Ipsbw";
 
-const channelID="UC5LxrchV-nNK5gYJa0Ipsbw";
+// RSS via rss2json (funciona en GitHub Pages)
+const rssURL =
+"https://api.rss2json.com/v1/api.json?rss_url=" +
+encodeURIComponent(
+"https://www.youtube.com/feeds/videos.xml?channel_id="+channelID
+);
 
-fetch("https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id="+channelID)
-.then(res=>res.json())
-.then(data=>{
+fetch(rssURL)
+.then(res => res.json())
+.then(data => {
 
-const videos=data.items;
+const container = document.getElementById("videoList");
+const main = document.getElementById("mainVideo");
 
-const first=videos[0].link.split("v=")[1];
+container.innerHTML="";
 
-document.getElementById("mainVideo").innerHTML=`
-<iframe width="100%" height="500"
-src="https://www.youtube.com/embed/${first}?autoplay=1&mute=1"
-allow="autoplay"
+// 🔥 VIDEO PRINCIPAL AUTOPLAY
+const firstVideo = data.items[0].link.split("v=")[1];
+
+main.innerHTML = `
+<iframe src="https://www.youtube.com/embed/${firstVideo}?autoplay=1&mute=1"
 frameborder="0"
+allow="autoplay; encrypted-media"
 allowfullscreen></iframe>
 `;
 
-let html="";
+// 🔥 LISTA AUTOMÁTICA
+data.items.forEach(item=>{
 
-videos.forEach((v,i)=>{
-if(i===0) return;
+const videoID = item.link.split("v=")[1];
 
-const id=v.link.split("v=")[1];
+const card = document.createElement("div");
+card.className="card";
 
-html+=`
-<div class="card" onclick="play('${id}')">
-<img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
-<p style="padding:10px;">${v.title}</p>
-</div>
+card.innerHTML=`
+<img src="https://img.youtube.com/vi/${videoID}/hqdefault.jpg">
+<p>${item.title}</p>
 `;
-});
 
-document.getElementById("videoGrid").innerHTML=html;
-
-});
-
-function play(id){
-document.getElementById("mainVideo").innerHTML=`
-<iframe width="100%" height="500"
-src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1"
-allow="autoplay"
+card.onclick=()=>{
+main.innerHTML = `
+<iframe src="https://www.youtube.com/embed/${videoID}?autoplay=1&mute=1"
 frameborder="0"
+allow="autoplay; encrypted-media"
 allowfullscreen></iframe>
 `;
+window.scrollTo({top:0,behavior:"smooth"});
 }
+
+container.appendChild(card);
+
+});
+
+})
+.catch(err=>{
+document.getElementById("mainVideo").innerHTML="Error cargando vídeos";
+console.log(err);
+});
 
 </script>
 
