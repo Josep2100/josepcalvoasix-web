@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JosepCalvo ASIX - Linux Hacker</title>
+<title>JOSEPCALVO ASIX — CYBER TERMINAL</title>
 
 <style>
+/* RESET */
 body{
     margin:0;
     font-family:Consolas, monospace;
@@ -14,7 +15,43 @@ body{
     overflow-x:hidden;
 }
 
-/* MATRIX CANVAS */
+/* ===== INTRO ROOT ACCESS ===== */
+#intro{
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:black;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#22c55e;
+    font-size:28px;
+    z-index:9999;
+    animation:fadeOut 2.2s forwards 2.5s;
+    text-shadow:0 0 20px #22c55e;
+}
+
+@keyframes fadeOut {
+    to {opacity:0;visibility:hidden;}
+}
+
+/* ===== GLITCH EFFECT ===== */
+.glitch{
+    position:relative;
+    display:inline-block;
+    font-size:40px;
+    animation:glitch 1s infinite;
+}
+
+@keyframes glitch{
+    0%{text-shadow:2px 0 red,-2px 0 blue;}
+    20%{text-shadow:-2px 0 red,2px 0 blue;}
+    40%{text-shadow:2px 0 red,-2px 0 green;}
+    60%{text-shadow:-2px 0 cyan,2px 0 purple;}
+    100%{text-shadow:0 0 10px #22c55e;}
+}
+
+/* ===== MATRIX CANVAS ===== */
 #matrix{
     position:fixed;
     top:0;
@@ -62,10 +99,7 @@ body{
     text-align:center;
 }
 
-h1{
-    text-shadow:0 0 15px #22c55e;
-}
-
+/* BOTÓN NEON */
 .boton{
     display:inline-block;
     margin-top:20px;
@@ -76,14 +110,16 @@ h1{
     text-decoration:none;
     font-weight:bold;
     transition:0.3s;
+    box-shadow:0 0 12px #22c55e;
 }
 
 .boton:hover{
     background:#4ade80;
-    transform:scale(1.05);
+    transform:scale(1.08);
+    box-shadow:0 0 22px #4ade80;
 }
 
-/* Cards videos */
+/* GRID videos */
 .videos{
     margin-top:40px;
     display:flex;
@@ -92,6 +128,7 @@ h1{
     justify-content:center;
 }
 
+/* CARDS MEJORADAS */
 .card{
     background:#020617;
     border:1px solid #22c55e;
@@ -102,14 +139,28 @@ h1{
     box-shadow:0 0 10px rgba(34,197,94,0.3);
     text-decoration:none;
     color:#22c55e;
+    position:relative;
+    overflow:hidden;
 }
 
 .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 0 20px #22c55e;
+    transform:translateY(-10px);
+    box-shadow:0 0 30px #22c55e;
 }
 
-/* Terminal */
+/* Miniaturas dinámicas */
+.card img{
+    width:100%;
+    border-radius:8px;
+    margin-bottom:10px;
+    transition:0.3s;
+}
+
+.card:hover img{
+    filter:brightness(1.15);
+}
+
+/* TERMINAL */
 .terminal{
     margin-top:30px;
     background:#020617;
@@ -130,6 +181,9 @@ h1{
 
 <body>
 
+<!-- INTRO -->
+<div id="intro">🔐 ROOT ACCESS GRANTED</div>
+
 <canvas id="matrix"></canvas>
 
 <div class="perfil">
@@ -137,102 +191,100 @@ h1{
 </div>
 
 <div class="container">
-<h1>JOSEPCALVO ASIX 🐧 ROOT TERMINAL</h1>
-<p>Administración Linux, Ubuntu y SysAdmin extremo</p>
+<h1 class="glitch">JOSEPCALVO ASIX 🐧</h1>
+<p>Linux • SysAdmin • Hacking visual profesional</p>
+
+<!-- Subs en tiempo real -->
+<h3 id="subs">Suscriptores: cargando...</h3>
 
 <a class="boton" href="https://www.youtube.com/@josepcalvoasix/videos" target="_blank">
 🔥 Ir al canal de YouTube
 </a>
 
+<!-- Terminal -->
 <div class="terminal">
 <span id="typing"></span>
 </div>
 <div class="counter">Comandos ejecutados: <span id="count">0</span></div>
 
-<!-- 🔥 CARDS DE VIDEOS FIJOS + AUTO-VIDEO -->
+<!-- VIDEOS -->
 <div class="videos">
 
-<!-- AUTO-VIDEO (nuevo video que subas) -->
+<!-- AUTO-VIDEO -->
 <a id="autoVideo" target="_blank" class="card">
 <h3>⏳ Cargando último video...</h3>
 <p>Detectando subida automática...</p>
 </a>
 
-<!-- Videos fijos -->
-<a href="https://www.youtube.com/watch?v=Nj4raM_5wWo&t=9s" target="_blank" class="card">
+<!-- TUS VIDEOS -->
+<a href="https://www.youtube.com/watch?v=Nj4raM_5wWo" target="_blank" class="card">
+<img src="https://img.youtube.com/vi/Nj4raM_5wWo/hqdefault.jpg">
 <h3>MEMORIA RAM & SWAP</h3>
-<p>free -h, swappiness y gestión avanzada.</p>
 </a>
 
 <a href="https://www.youtube.com/watch?v=nvU_d3823kY" target="_blank" class="card">
+<img src="https://img.youtube.com/vi/nvU_d3823kY/hqdefault.jpg">
 <h3>GESTIÓN DE PROCESOS</h3>
-<p>top, ps, kill, nice y renice.</p>
 </a>
 
 <a href="https://www.youtube.com/watch?v=C-h8ames-GM" target="_blank" class="card">
+<img src="https://img.youtube.com/vi/C-h8ames-GM/hqdefault.jpg">
 <h3>FSTAB</h3>
-<p>Montaje automático y gestión de discos.</p>
 </a>
 
 <a href="https://www.youtube.com/watch?v=HZbzfRrD2yM" target="_blank" class="card">
-<h3>INSTALACIÓN DESDE CÓDIGO FUENTE</h3>
-<p>Compilar e instalar software desde source.</p>
+<img src="https://img.youtube.com/vi/HZbzfRrD2yM/hqdefault.jpg">
+<h3>INSTALACIÓN EN CÓDIGO FUENTE</h3>
 </a>
 
 <a href="https://www.youtube.com/watch?v=KnBaMcEgnn0" target="_blank" class="card">
+<img src="https://img.youtube.com/vi/KnBaMcEgnn0/hqdefault.jpg">
 <h3>REPARACIÓN DEL GRUB</h3>
-<p>Solución de arranque en Linux.</p>
 </a>
 
 </div>
 </div>
 
 <script>
-/* MATRIX EFFECT */
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+/* =======================
+   MATRIX BACKGROUND
+======================= */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
 
-const letters = "01";
-const fontSize = 14;
-const columns = canvas.width/fontSize;
-const drops = [];
+const letters="01";
+const fontSize=14;
+const columns=canvas.width/fontSize;
+const drops=Array(columns).fill(1);
 
-for(let x=0;x<columns;x++) drops[x]=1;
+function drawMatrix(){
+  ctx.fillStyle="rgba(0,0,0,0.05)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
 
-function draw(){
-ctx.fillStyle="rgba(0,0,0,0.05)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="#22c55e";
-ctx.font=fontSize+"px monospace";
+  ctx.fillStyle="#22c55e";
+  ctx.font=fontSize+"px monospace";
 
-for(let i=0;i<drops.length;i++){
-const text = letters.charAt(Math.floor(Math.random()*letters.length));
-ctx.fillText(text,i*fontSize,drops[i]*fontSize);
-if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0;
-drops[i]++;
+  drops.forEach((y,i)=>{
+    const text=letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,y*fontSize);
+    drops[i]=(y*fontSize>canvas.height && Math.random()>0.975)?0:y+1;
+  });
 }
-}
-setInterval(draw,33);
+setInterval(drawMatrix,33);
 
-/* PARTICLES */
-for(let i=0;i<40;i++){
-let p=document.createElement("div");
-p.className="particle";
-p.style.left=Math.random()*100+"vw";
-p.style.animationDuration=(5+Math.random()*5)+"s";
-document.body.appendChild(p);
-}
-
-/* TYPING TERMINAL */
+/* =======================
+   TYPING TERMINAL
+======================= */
 const textLines=[
 "sudo apt update",
+"sudo apt upgrade -y",
 "free -h",
+"swapon --show",
 "ps aux",
-"sudo mount -a",
-"docker run hello-world",
-"grub-install /dev/sda"
+"nano /etc/fstab",
+"systemctl restart ssh"
 ];
 
 let i=0;
@@ -240,40 +292,49 @@ let count=0;
 function type(){
 if(i<textLines.length){
 document.getElementById("typing").innerHTML += "$ "+textLines[i]+"<br>";
-i++;
-count++;
+i++;count++;
 document.getElementById("count").innerText=count;
 setTimeout(type,900);
 }
 }
 type();
 
-/* 🔥 AUTO DETECCIÓN ÚLTIMO VIDEO SUBIDO */
+/* =======================
+   AUTO-VIDEO NUEVO
+======================= */
 const channelID = "UC5LxrchV-nNK5gYJa0Ipsbw";
 
 function getVideoID(url){
-  const match = url.match(/v=([^&]+)/);
-  return match ? match[1] : null;
+  const match=url.match(/v=([^&]+)/);
+  return match?match[1]:null;
 }
 
-fetch("https://api.rss2json.com/v1/api.json?rss_url=" +
-encodeURIComponent("https://www.youtube.com/feeds/videos.xml?channel_id="+channelID))
-.then(res=>res.json())
+fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+  `https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`
+)}`)
+.then(r=>r.json())
 .then(data=>{
+  const video=data.items[0];
+  const id=getVideoID(video.link);
 
-  const video = data.items[0];
-  const videoID = getVideoID(video.link);
-  const card = document.getElementById("autoVideo");
-
-  card.href = video.link;
-  card.innerHTML = `
-  <h3>🔥 ${video.title}</h3>
-  <p>Nuevo vídeo detectado automáticamente ⚡</p>
+  document.getElementById("autoVideo").innerHTML=`
+    <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
+    <h3>🔥 ${video.title}</h3>
+    <p>Nuevo vídeo detectado automáticamente ⚡</p>
   `;
-})
-.catch(()=>{
-  document.getElementById("autoVideo").innerHTML =
-  "<h3>Error cargando último video</h3>";
+  document.getElementById("autoVideo").href=video.link;
+});
+
+/* =======================
+   SUBS EN TIEMPO REAL
+======================= */
+fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+  "https://www.youtube.com/feeds/videos.xml?channel_id="+channelID
+)}`)
+.then(r=>r.json())
+.then(data=>{
+document.getElementById("subs").textContent =
+`Suscriptores: ${data.feed.subscriberCount.toLocaleString()}`;
 });
 </script>
 
