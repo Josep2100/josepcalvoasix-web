@@ -1,219 +1,35 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Josep Calvo – Aprende Linux Fácil | Administración Linux y ASIX</title>
-<meta name="description" content="Aprende Linux de forma práctica y profesional. Tutoriales de Linux, ASIX, administración y Docker explicados paso a paso.">
-
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f9fafb;
-    color: #111;
-}
-
-/* ===== NAVBAR ===== */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: white;
-    display: flex;
-    justify-content: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    z-index: 1000;
-}
-
-.nav-container {
-    width: 100%;
-    max-width: 1200px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-}
-
-.logo {
-    font-weight: bold;
-    font-size: 18px;
-    white-space: nowrap;
-}
-
-.nav-links {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-    transition: 0.2s ease;
-}
-
-.nav-links a:hover {
-    color: #2563eb;
-}
-
-.subscribe-btn {
-    background: #ff0000;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-weight: bold;
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.subscribe-btn:hover {
-    background: #cc0000;
-}
-
-/* ===== HERO ===== */
-.hero {
-    margin-top: 140px;
-    text-align: center;
-    padding: 80px 20px;
-}
-
-.hero h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    font-size: 18px;
-    color: #555;
-}
-
-/* ===== SECTIONS ===== */
-section {
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.cards {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-}
-
-.card {
-    background: #f3f4f6;
-    padding: 20px;
-    border-radius: 10px;
-    width: 260px;
-    transition: transform 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.latest-video iframe {
-    margin-top: 20px;
-    border-radius: 10px;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-    .nav-links {
-        display: none;
-    }
-}
-</style>
+<title>Bienvenido a Linux Fácil</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-container">
     <div class="logo">Josep Calvo – Aprende Linux Fácil</div>
-
     <div class="nav-links">
-      <a href="#">Inicio</a>
-      <a href="#">Linux Básico</a>
-      <a href="#">Manuales</a>
-      <a href="#">Sobre mí</a>
-      <a href="#">Contacto</a>
-      <a href="https://www.youtube.com/@josepcalvoasix" target="_blank" class="subscribe-btn">
-        ▶ Suscribirse
-      </a>
+      <a href="index.html">Inicio</a>
+      <a href="linux-basico.html">Linux Básico</a>
+      <a href="manuales.html">Manuales</a>
+      <a href="sobre-mi.html">Sobre mí</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="https://www.youtube.com/@josepcalvoasix" target="_blank" class="subscribe-btn">▶ Suscribirse</a>
     </div>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-    <h1>Aprende Linux de forma práctica y profesional</h1>
-    <p>Tutoriales claros de Linux, ASIX y administración real.</p>
+<h1>Bienvenido a Linux Fácil</h1>
 </section>
 
-<!-- EMPIEZA AQUÍ -->
 <section>
-    <h2>🔰 Empieza aquí</h2>
-    <p>Si estás empezando en Linux o estudias ASIX, comienza por estos vídeos fundamentales:</p>
-
-    <div class="cards">
-        <div class="card">
-            <h3>Permisos en Linux</h3>
-            <p>Aprende chmod, chown y rwx paso a paso.</p>
-        </div>
-
-        <div class="card">
-            <h3>Usuarios y Grupos</h3>
-            <p>Gestiona usuarios como un administrador real.</p>
-        </div>
-
-        <div class="card">
-            <h3>Docker desde cero</h3>
-            <p>Tu primer contenedor y persistencia de datos.</p>
-        </div>
-    </div>
+<div id=""></div>
 </section>
 
-<!-- ÚLTIMO VÍDEO -->
-<section class="latest-video">
-    <h2>🔥 Último vídeo</h2>
-    <div id="latestVideo">Cargando último vídeo...</div>
-</section>
-
-<!-- SEO CONTENT -->
-<section>
-    <h2>Aprende Linux y Administración desde cero</h2>
-    <p>
-        En esta web encontrarás tutoriales prácticos sobre Linux,
-        permisos, usuarios, Docker, systemd, cron y administración de sistemas.
-        Todo explicado de forma clara y pensado para estudiantes ASIX
-        y futuros administradores de sistemas.
-    </p>
-</section>
-
-<script>
-fetch("https://api.rss2json.com/v1/api.json?rss_url=" + 
-    encodeURIComponent("https://www.youtube.com/feeds/videos.xml?channel_id=UC5LxrchV-nNK5gYJa0Ipsbw"))
-.then(response => response.json())
-.then(data => {
-    const video = data.items[0];
-    const videoId = video.link.split("v=")[1];
-
-    document.getElementById("latestVideo").innerHTML = `
-        <iframe width="560" height="315"
-        src="https://www.youtube.com/embed/${videoId}"
-        frameborder="0" allowfullscreen></iframe>
-    `;
-})
-.catch(() => {
-    document.getElementById("latestVideo").innerHTML = "No se pudo cargar el vídeo.";
-});
-</script>
-
+<script src="js/main.js"></script>
 </body>
 </html>
