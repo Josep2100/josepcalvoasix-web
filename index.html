@@ -3,441 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOSEPCALVO ASIX — SYSTEM BOOT</title>
+
+<title>Josep Calvo – Aprende Linux Fácil | Administración Linux y ASIX</title>
+<meta name="description" content="Aprende Linux de forma práctica y profesional. Tutoriales de Linux, ASIX, administración y Docker explicados paso a paso.">
 
 <style>
-body{
-    margin:0;
-    font-family:Consolas, monospace;
-    background:#000;
-    color:#22c55e;
-    overflow-x:hidden;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f9fafb;
+    color: #111;
 }
 
-/* CRT EFFECT */
-body::before{
-    content:"";
-    position:fixed;
-    top:0;left:0;
-    width:100%;height:100%;
-    pointer-events:none;
-    background:
-        repeating-linear-gradient(
-            0deg,
-            rgba(255,255,255,0.03) 0px,
-            rgba(255,255,255,0.03) 1px,
-            transparent 1px,
-            transparent 4px
-        );
-    z-index:999;
-    animation:crtAnim 6s infinite linear;
-}
-@keyframes crtAnim{
-    0%{opacity:0.2;}
-    50%{opacity:0.4;}
-    100%{opacity:0.2;}
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    z-index: 1000;
 }
 
-/* BOOT ANIMATION */
-#boot{
-    position:fixed;
-    width:100%;height:100%;
-    background:black;
-    color:#22c55e;
-    font-size:16px;
-    overflow:hidden;
-    z-index:9999;
-    padding:20px;
-    white-space:pre-line;
-    animation:fadeBoot 7s linear forwards;
-}
-@keyframes fadeBoot {
-    0% {opacity:1;}
-    90% {opacity:1;}
-    100% {opacity:0; visibility:hidden;}
+.nav-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
 }
 
-/* MATRIX CANVAS */
-#matrix{
-    position:fixed;
-    top:0;left:0;
-    width:100%;
-    height:100%;
-    z-index:-20;
-    pointer-events:none;
+.logo {
+    font-weight: bold;
+    font-size: 18px;
+    white-space: nowrap;
 }
 
-/* NO PARALLAX — layers fijo */
-#layers{
-    position:relative;
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
-/* Glitch Title */
-.glitch{
-    font-size:40px;
-    animation:glitch 1.2s infinite;
-}
-@keyframes glitch{
-    0%{text-shadow:2px 0 red,-2px 0 cyan;}
-    20%{text-shadow:-2px 0 red,2px 0 cyan;}
-    40%{text-shadow:3px 0 lime,-3px 0 blue;}
-    60%{text-shadow:-3px 0 purple,3px 0 green;}
-    100%{text-shadow:0 0 12px #22c55e;}
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    transition: 0.2s ease;
 }
 
-/* Perfil */
-.perfil{text-align:center;margin-top:40px;}
-.perfil img{
-    width:160px;
-    height:160px;
-    border-radius:50%;
-    border:4px solid #22c55e;
+.nav-links a:hover {
+    color: #2563eb;
 }
 
-/* Layout */
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:20px;
-    text-align:center;
+.subscribe-btn {
+    background: #ff0000;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
-/* Button */
-.boton{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 25px;
-    background:#22c55e;
-    color:black;
-    border-radius:8px;
-    font-weight:bold;
-    text-decoration:none;
-    box-shadow:0 0 15px #22c55e;
-}
-.boton:hover{
-    background:#4ade80;
-    transform:scale(1.1);
+.subscribe-btn:hover {
+    background: #cc0000;
 }
 
-/* Cards */
-.videos{
-    margin-top:40px;
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    justify-content:center;
-}
-.card{
-    background:#020617;
-    border:1px solid #22c55e;
-    padding:20px;
-    width:260px;
-    border-radius:12px;
-    transition:0.3s;
-    box-shadow:0 0 10px rgba(34,197,94,0.5);
-}
-.card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 0 20px #22c55e;
-}
-.card img{
-    width:100%;
-    border-radius:8px;
+/* ===== HERO ===== */
+.hero {
+    margin-top: 140px;
+    text-align: center;
+    padding: 80px 20px;
 }
 
-/* Terminal */
-.terminal{
-    background:#020617;
-    border:1px solid #22c55e;
-    padding:15px;
-    text-align:left;
-    border-radius:8px;
-    min-height:120px;
-    margin-top:20px;
+.hero h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
 }
 
-/* Counter */
-.counter{color:#86efac;font-size:14px;}
+.hero p {
+    font-size: 18px;
+    color: #555;
+}
 
-#asciiGraph{
-    white-space:pre;
-    margin-top:20px;
+/* ===== SECTIONS ===== */
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #f3f4f6;
+    padding: 20px;
+    border-radius: 10px;
+    width: 260px;
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.latest-video iframe {
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .nav-links {
+        display: none;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- BOOT ANIMATION -->
-<div id="boot"></div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">Josep Calvo – Aprende Linux Fácil</div>
 
-<!-- MATRIX -->
-<canvas id="matrix"></canvas>
+    <div class="nav-links">
+      <a href="#">Inicio</a>
+      <a href="#">Linux Básico</a>
+      <a href="#">Manuales</a>
+      <a href="#">Sobre mí</a>
+      <a href="#">Contacto</a>
+      <a href="https://www.youtube.com/@josepcalvoasix" target="_blank" class="subscribe-btn">
+        ▶ Suscribirse
+      </a>
+    </div>
+  </div>
+</nav>
 
-<div id="layers">
+<!-- HERO -->
+<section class="hero">
+    <h1>Aprende Linux de forma práctica y profesional</h1>
+    <p>Tutoriales claros de Linux, ASIX y administración real.</p>
+</section>
 
-<div class="perfil">
-<img src="perfil.png">
-</div>
+<!-- EMPIEZA AQUÍ -->
+<section>
+    <h2>🔰 Empieza aquí</h2>
+    <p>Si estás empezando en Linux o estudias ASIX, comienza por estos vídeos fundamentales:</p>
 
-<div class="container">
-<h1 class="glitch">JOSEPCALVO ASIX 🐧</h1>
+    <div class="cards">
+        <div class="card">
+            <h3>Permisos en Linux</h3>
+            <p>Aprende chmod, chown y rwx paso a paso.</p>
+        </div>
 
-<h3 id="subs">Suscriptores: cargando...</h3>
-<h3 id="visitas">Visitas: 000000</h3>
+        <div class="card">
+            <h3>Usuarios y Grupos</h3>
+            <p>Gestiona usuarios como un administrador real.</p>
+        </div>
 
-<a href="https://www.youtube.com/@josepcalvoasix/videos" class="boton" target="_blank">🔥 Ir al canal</a>
+        <div class="card">
+            <h3>Docker desde cero</h3>
+            <p>Tu primer contenedor y persistencia de datos.</p>
+        </div>
+    </div>
+</section>
 
-<div class="terminal"><span id="typing"></span></div>
-<div class="counter">Comandos ejecutados: <span id="count">0</span></div>
+<!-- ÚLTIMO VÍDEO -->
+<section class="latest-video">
+    <h2>🔥 Último vídeo</h2>
+    <div id="latestVideo">Cargando último vídeo...</div>
+</section>
 
-<div id="asciiGraph"></div>
-
-<div class="videos">
-
-<a id="autoVideo" target="_blank" class="card">
-<h3>⏳ Cargando último video...</h3>
-</a>
-
-<a href="https://www.youtube.com/watch?v=Nj4raM_5wWo" target="_blank" class="card">
-<img src="https://img.youtube.com/vi/Nj4raM_5wWo/hqdefault.jpg">
-<h3>MEMORIA RAM</h3>
-</a>
-
-<a href="https://www.youtube.com/watch?v=nvU_d3823kY" target="_blank" class="card">
-<img src="https://img.youtube.com/vi/nvU_d3823kY/hqdefault.jpg">
-<h3>PROCESOS</h3>
-</a>
-
-<a href="https://www.youtube.com/watch?v=C-h8ames-GM" target="_blank" class="card">
-<img src="https://img.youtube.com/vi/C-h8ames-GM/hqdefault.jpg">
-<h3>FSTAB</h3>
-</a>
-
-<a href="https://www.youtube.com/watch?v=HZbzfRrD2yM" target="_blank" class="card">
-<img src="https://img.youtube.com/vi/HZbzfRrD2yM/hqdefault.jpg">
-<h3>CÓDIGO FUENTE</h3>
-</a>
-
-<a href="https://www.youtube.com/watch?v=KnBaMcEgnn0" target="_blank" class="card">
-<img src="https://img.youtube.com/vi/KnBaMcEgnn0/hqdefault.jpg">
-<h3>REPARAR GRUB</h3>
-</a>
-
-</div>
-</div>
-
-</div>
-
+<!-- SEO CONTENT -->
+<section>
+    <h2>Aprende Linux y Administración desde cero</h2>
+    <p>
+        En esta web encontrarás tutoriales prácticos sobre Linux,
+        permisos, usuarios, Docker, systemd, cron y administración de sistemas.
+        Todo explicado de forma clara y pensado para estudiantes ASIX
+        y futuros administradores de sistemas.
+    </p>
+</section>
 
 <script>
-/* ============================================================
-   BOOT LINUX (SIN SONIDO)
-============================================================ */
+fetch("https://api.rss2json.com/v1/api.json?rss_url=" + 
+    encodeURIComponent("https://www.youtube.com/feeds/videos.xml?channel_id=UC5LxrchV-nNK5gYJa0Ipsbw"))
+.then(response => response.json())
+.then(data => {
+    const video = data.items[0];
+    const videoId = video.link.split("v=")[1];
 
-const boot = document.getElementById("boot");
-
-const bootLines = [
-"[ OK ] Starting system logger...",
-"[ OK ] Mounting local file systems...",
-"[ OK ] Loading kernel modules...",
-"[FAILED] Could not mount /dev/sda1 (ignored)",
-"[ OK ] Starting Networking Service...",
-"[ OK ] Starting SSH daemon...",
-"[ OK ] Starting Display Manager (X11)...",
-"[ OK ] System boot completed.",
-"",
-"Welcome to: JOSEPCALVO ASIX — CYBER TERMINAL"
-];
-
-let bl = 0;
-
-function playBoot() {
-    let interval = setInterval(() => {
-        if (bl < bootLines.length) {
-            boot.innerHTML += bootLines[bl] + "\n";
-            bl++;
-        } else {
-            clearInterval(interval);
-        }
-    }, 300);
-}
-
-window.onload = () => {
-    playBoot();
-};
-
-/* ============================================================
-   MATRIX
-============================================================ */
-
-const canvasMatrix = document.getElementById("matrix");
-const ctx = canvasMatrix.getContext("2d");
-
-function resizeMatrix() {
-    canvasMatrix.width = window.innerWidth;
-    canvasMatrix.height = window.innerHeight;
-}
-resizeMatrix();
-window.addEventListener("resize", resizeMatrix);
-
-const letters = "01";
-const fontSize = 14;
-let drops = [];
-
-function initDrops() {
-    drops = Array(Math.floor(canvasMatrix.width / fontSize)).fill(1);
-}
-initDrops();
-
-function drawMatrix() {
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0, 0, canvasMatrix.width, canvasMatrix.height);
-
-    ctx.fillStyle = "#22c55e";
-    ctx.font = fontSize + "px monospace";
-
-    drops.forEach((y, i) => {
-        const char = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(char, i * fontSize, y * fontSize);
-
-        if (y * fontSize > canvasMatrix.height && Math.random() > 0.975) {
-            drops[i] = 0;
-        }
-        drops[i]++;
-    });
-}
-
-setInterval(drawMatrix, 33);
-
-/* ============================================================
-   TERMINAL (SIN SONIDO)
-============================================================ */
-
-const textLines = [
-    "sudo apt update",
-    "sudo apt upgrade -y",
-    "free -h",
-    "ps aux",
-    "nano /etc/fstab",
-    "systemctl restart ssh",
-    "df -h",
-];
-
-let i = 0;
-let count = 0;
-
-function type() {
-    if (i < textLines.length) {
-        document.getElementById("typing").innerHTML += "$ " + textLines[i] + "<br>";
-        i++; 
-        count++;
-        document.getElementById("count").innerText = count;
-
-        setTimeout(type, 700);
-    }
-}
-
-setTimeout(type, 4000);
-
-/* ============================================================
-   VISITAS
-============================================================ */
-
-let visitas = localStorage.getItem("visitas_josep");
-if (!visitas) {
-    visitas = 1;
-} else {
-    visitas = parseInt(visitas) + 1;
-}
-localStorage.setItem("visitas_josep", visitas);
-
-document.getElementById("visitas").innerHTML =
-    "Visitas: " + String(visitas).padStart(6, "0");
-
-/* ============================================================
-   ASCII GRAPH
-============================================================ */
-
-function asciiGraph(value) {
-    let out = "";
-    let bars = Math.floor(value / 50);
-    for (let i = 0; i < bars; i++) out += "█";
-    return out;
-}
-
-document.getElementById("asciiGraph").innerText =
-    "Actividad del sistema:\n" + asciiGraph(visitas * 6);
-
-/* ============================================================
-   AUTO-VÍDEO YOUTUBE
-============================================================ */
-
-function getVideoID(url) {
-    const m = url.match(/v=([^&]+)/);
-    return m ? m[1] : null;
-}
-
-fetch(
-    "https://api.rss2json.com/v1/api.json?rss_url=" +
-        encodeURIComponent(
-            "https://www.youtube.com/feeds/videos.xml?channel_id=UC5LxrchV-nNK5gYJa0Ipsbw"
-        )
-)
-    .then((r) => r.json())
-    .then((data) => {
-        const v = data.items[0];
-        const id = getVideoID(v.link);
-
-        document.getElementById("autoVideo").innerHTML = `
-        <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg">
-        <h3>🔥 ${v.title}</h3>
-        <p>Último vídeo detectado automáticamente</p>
-        `;
-
-        document.getElementById("autoVideo").href = v.link;
-    });
-
-/* ============================================================
-   SUSCRIPTORES INFALIBLES
-============================================================ */
-
-async function cargarSubsInfalible() {
-    try {
-        const url =
-            "https://api.socialcounts.org/youtube-live-subscriber-count/UC5LxrchV-nNK5gYJa0Ipsbw";
-
-        let response = await fetch(url);
-        let data = await response.json();
-
-        const subs = data.estSub ?? data.subscriberCount ?? 0;
-
-        animarSubsInfalible(subs);
-    } catch (err) {
-        document.getElementById("subs").innerHTML =
-            "Suscriptores: error";
-    }
-}
-
-function animarSubsInfalible(finalValue) {
-    let current = 0;
-    const speed = Math.max(10, finalValue / 150);
-
-    const interval = setInterval(() => {
-        current += Math.round(speed);
-        if (current >= finalValue) {
-            current = finalValue;
-            clearInterval(interval);
-        }
-
-        document.getElementById("subs").innerHTML =
-            "Suscriptores: " + current.toLocaleString();
-    }, 25);
-}
-
-cargarSubsInfalible();
-setInterval(cargarSubsInfalible, 10000);
-
+    document.getElementById("latestVideo").innerHTML = `
+        <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/${videoId}"
+        frameborder="0" allowfullscreen></iframe>
+    `;
+})
+.catch(() => {
+    document.getElementById("latestVideo").innerHTML = "No se pudo cargar el vídeo.";
+});
 </script>
+
 </body>
 </html>

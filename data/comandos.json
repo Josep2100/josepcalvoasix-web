@@ -1,0 +1,34 @@
+[
+  {
+    "titulo": "Memoria RAM",
+    "video": "Nj4raM_5wWo",
+    "comandos": [
+      "free -h",
+      "cat /proc/meminfo",
+      "sysctl vm.swappiness",
+      "swapoff -a"
+    ]
+  },
+  {
+    "titulo": "Gestión de procesos",
+    "video": "nvU_d3823kY",
+    "comandos": [
+      "top",
+      "ps aux",
+      "ps -eo",
+      "kill -9 PID",
+      "nice",
+      "renice"
+    ]
+  },
+  {
+    "titulo": "FSTAB",
+    "video": "C-h8ames-GM",
+    "comandos": [
+      "nano /etc/fstab",
+      "mount -a",
+      "lsblk",
+      "blkid"
+    ]
+  }
+]
